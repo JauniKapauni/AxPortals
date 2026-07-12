@@ -1,0 +1,11 @@
+name: AxPortals
+description: $description
+prefix: AxPortals
+version: '${version}'
+
+main: de.jaunikapauni.axportals.AxPortals
+api-version: '26.1.2'
+load: POSTWORLD
+
+authors: [ JauniKapauni ]
+website: https://github.com/JauniKapauni
