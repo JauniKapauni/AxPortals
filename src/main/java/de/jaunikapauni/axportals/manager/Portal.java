@@ -26,6 +26,7 @@ public class Portal {
 
     public boolean contains(Location loc){
         if(!loc.getWorld().equals(pos1.getWorld())) return false;
+        if(!loc.getWorld().getName().equals(pos1.getWorld().getName())) return false;
         return loc.getBlockX() >= Math.min(pos1.getBlockX(), pos2.getBlockX())
                 && loc.getBlockX() <= Math.max(pos1.getBlockX(), pos2.getBlockX())
                 && loc.getBlockY() >= Math.min(pos1.getBlockY(), pos2.getBlockY())
