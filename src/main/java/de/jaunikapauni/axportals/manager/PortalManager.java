@@ -7,10 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PortalManager {
 
@@ -38,6 +35,7 @@ public class PortalManager {
             return;
         }
         for(String name : configuration.getConfigurationSection("portals").getKeys(false)){
+            String nameLower = name.toLowerCase();
             String path = "portals." + name;
             World world = reference.getServer().getWorld(configuration.getString(path + ".world"));
             if(world == null){
@@ -56,11 +54,12 @@ public class PortalManager {
                     configuration.getInt(path + ".pos2.y"),
                     configuration.getInt(path + ".pos2.z")
             );
-            portals.put(name, new Portal(name, pos1, pos2, configuration.getString(path + ".command")));
+            portals.put(nameLower, new Portal(name, pos1, pos2, configuration.getString(path + ".command")));
         }
     }
 
     public void create(String name, Location pos1, Location pos2, String command){
+        String nameLower = name.toLowerCase();
         String path = "portals." + name;
         configuration.set(path + ".world", pos1.getWorld().getName());
         configuration.set(path + ".pos1.x", pos1.getBlockX());
@@ -71,13 +70,13 @@ public class PortalManager {
         configuration.set(path + ".pos2.z", pos2.getBlockZ());
         configuration.set(path + ".command", command);
         save();
-        portals.put(name, new Portal(name, pos1, pos2, command));
+        portals.put(nameLower, new Portal(name, pos1, pos2, command));
     }
 
     public void delete(String name){
-        portals.remove(name);
+        String nameLower = name.toLowerCase();
+        portals.remove(nameLower);
         configuration.set("portals." + name, null);
-        save();
     }
 
     public Collection<Portal> getPortals(){
@@ -90,5 +89,9 @@ public class PortalManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean exists(String name){
+        return portals.containsKey(name.toLowerCase());
     }
 }

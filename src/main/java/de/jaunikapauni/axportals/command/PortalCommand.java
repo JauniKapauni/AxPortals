@@ -25,7 +25,9 @@ public class PortalCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
         if(args.length < 1){
-            return false;
+            p.sendMessage("/portal create <name> <command>");
+            p.sendMessage("/portal delete <name>");
+            return true;
         }
         switch (args[0].toLowerCase()){
             case "create" -> {
@@ -42,7 +44,12 @@ public class PortalCommand implements CommandExecutor {
                     return true;
                 }
                 String cmd = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-                reference.getPortalManager().create(args[1], selection[0], selection[1], cmd);
+                String portalName = args[1].toLowerCase();
+                if(reference.getPortalManager().exists(portalName)){
+                    p.sendMessage("Portal already exists!");
+                    return true;
+                }
+                reference.getPortalManager().create(portalName, selection[0], selection[1], cmd);
                 p.sendMessage("Portal created!");
             }
             case "delete" -> {
@@ -53,7 +60,12 @@ public class PortalCommand implements CommandExecutor {
                 if(args.length < 2){
                     return false;
                 }
-                reference.getPortalManager().delete(args[1]);
+                String portalName = args[1].toLowerCase();
+                if(!reference.getPortalManager().exists(portalName)){
+                    p.sendMessage("Portal does not exist!");
+                    return true;
+                }
+                reference.getPortalManager().delete(portalName);
                 p.sendMessage("Portal deleted!");
             }
         }
