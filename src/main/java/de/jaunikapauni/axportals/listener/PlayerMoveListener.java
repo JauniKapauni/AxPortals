@@ -20,11 +20,13 @@ public class PlayerMoveListener implements Listener {
         if (e.getTo() == null) {
             return;
         }
+        if(e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()){
+            return;
+        }
         Player p = e.getPlayer();
         for (Portal portal : reference.getPortalManager().getPortals()) {
             if(portal.contains(e.getTo()) && !portal.contains(e.getFrom())){
-                String command = portal.getCommand();
-                p.performCommand(command);
+                reference.getServer().dispatchCommand(reference.getServer().getConsoleSender(), portal.getCommand().replace("%player%", p.getName()));
                 return;
             }
         }
