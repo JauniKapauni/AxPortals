@@ -23,4 +23,8 @@ public class SelectionManager {
     public Location[] get(UUID uuid){
         return selections.get(uuid);
     }
+
+    public void remove(UUID uuid){
+        selections.remove(uuid);
+    }
 }
