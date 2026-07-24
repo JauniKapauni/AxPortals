@@ -24,8 +24,10 @@ public final class AxPortals extends JavaPlugin {
         // Plugin startup logic
         saveDefaultConfig();
         portalManager = new PortalManager(this);
-        portalManager.load();
         selectionManager = new SelectionManager();
+        getServer().getScheduler().runTask(this, () -> {
+            portalManager.load();
+        });
         getCommand("portal").setExecutor(new PortalCommand(this));
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(this), this);
