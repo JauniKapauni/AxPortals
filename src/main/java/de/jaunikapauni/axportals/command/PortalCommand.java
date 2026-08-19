@@ -35,7 +35,7 @@ public class PortalCommand implements CommandExecutor {
         }
         switch (args[0].toLowerCase()){
             case "create" -> {
-                if(!p.hasPermission("axportals.create")){
+                if(!p.hasPermission("axportals.portal.create")){
                     p.sendMessage("No permission");
                     return true;
                 }
@@ -57,7 +57,7 @@ public class PortalCommand implements CommandExecutor {
                 p.sendMessage("Portal created!");
             }
             case "delete" -> {
-                if(!p.hasPermission("axportals.delete")){
+                if(!p.hasPermission("axportals.portal.delete")){
                     p.sendMessage("No permission");
                     return true;
                 }
