@@ -24,6 +24,10 @@ public class PortalCommand implements CommandExecutor {
             return true;
         }
         Player p = (Player) sender;
+        if (!p.hasPermission("axportals.portal")) {
+            p.sendMessage("You don't have the permission! [axportals.portal]");
+            return true;
+        }
         if(args.length < 1){
             p.sendMessage("/portal create <name> <command>");
             p.sendMessage("/portal delete <name>");
