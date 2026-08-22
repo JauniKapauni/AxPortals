@@ -26,7 +26,11 @@ public class PlayerMoveListener implements Listener {
         Player p = e.getPlayer();
         for (Portal portal : reference.getPortalManager().getPortals()) {
             if(portal.contains(e.getTo()) && !portal.contains(e.getFrom())){
-                p.performCommand(portal.getCommand());
+                String command = portal.getCommand();
+                if(command.startsWith("/")){
+                    command = command.substring(1);
+                }
+                reference.getServer().dispatchCommand(reference.getServer().getConsoleSender(), command + " " + p.getName());
                 return;
             }
         }
